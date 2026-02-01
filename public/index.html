@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🔍 Remote Desktop Detector</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .header {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .header h1 {
+        color: #333;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        color: #666;
+        font-size: 1.1em;
+      }
+
+      .control-panel {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 15px 30px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .btn-start {
+        background: #10b981;
+        color: white;
+      }
+
+      .btn-start:hover {
+        background: #059669;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+      }
+
+      .btn-stop {
+        background: #ef4444;
+        color: white;
+      }
+
+      .btn-stop:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+      }
+
+      .btn-scan {
+        background: #3b82f6;
+        color: white;
+      }
+
+      .btn-scan:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .status-bar {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+
+      .status-dot {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      .status-dot.active {
+        background: #10b981;
+      }
+
+      .status-dot.inactive {
+        background: #94a3b8;
+        animation: none;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      .results-container {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        min-height: 400px;
+      }
+
+      .results-header {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        color: #333;
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 10px;
+      }
+
+      .scan-result {
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        border-left: 5px solid;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .scan-result.clean {
+        background: #d1fae5;
+        border-color: #10b981;
+      }
+
+      .scan-result.threat {
+        background: #fee2e2;
+        border-color: #ef4444;
+      }
+
+      .scan-time {
+        font-size: 0.9em;
+        color: #666;
+        margin-bottom: 10px;
+      }
+
+      .scan-summary {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      .scan-summary.clean {
+        color: #10b981;
+      }
+
+      .scan-summary.threat {
+        color: #ef4444;
+      }
+
+      .detection-item {
+        padding: 10px;
+        margin: 5px 0;
+        background: white;
+        border-radius: 5px;
+        font-size: 0.95em;
+      }
+
+      .severity-badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.8em;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      .severity-critical {
+        background: #dc2626;
+        color: white;
+      }
+
+      .severity-high {
+        background: #f59e0b;
+        color: white;
+      }
+
+      .severity-medium {
+        background: #eab308;
+        color: white;
+      }
+
+      .severity-low {
+        background: #10b981;
+        color: white;
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 60px 20px;
+        color: #94a3b8;
+        font-size: 1.1em;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 40px;
+      }
+
+      .spinner {
+        border: 4px solid #f3f4f6;
+        border-top: 4px solid #667eea;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .scan-count {
+        font-size: 1em;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <h1>🔍 Remote Desktop Detector</h1>
+        <p>Real-time detection of unauthorized remote access software</p>
+      </div>
+
+      <!-- Control Panel -->
+      <div class="control-panel">
+        <button id="startBtn" class="btn btn-start">
+          ▶ Start Continuous Monitoring
+        </button>
+        <button id="stopBtn" class="btn btn-stop" disabled>
+          ⏹ Stop Monitoring
+        </button>
+        <button id="scanBtn" class="btn btn-scan">🔍 Scan Once</button>
+      </div>
+
+      <!-- Status Bar -->
+      <div class="status-bar">
+        <div class="status-indicator">
+          <div id="statusDot" class="status-dot inactive"></div>
+          <span id="statusText">Inactive</span>
+        </div>
+        <div class="scan-count">
+          Scans performed: <strong id="scanCount">0</strong>
+        </div>
+      </div>
+
+      <!-- Results Container -->
+      <div class="results-container">
+        <div class="results-header">Detection Results</div>
+        <div id="resultsContent">
+          <div class="no-results">
+            Click "Start Continuous Monitoring" or "Scan Once" to begin
+            detection
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let scanCount = 0;
+      let eventSource = null;
+
+      const startBtn = document.getElementById("startBtn");
+      const stopBtn = document.getElementById("stopBtn");
+      const scanBtn = document.getElementById("scanBtn");
+      const statusDot = document.getElementById("statusDot");
+      const statusText = document.getElementById("statusText");
+      const resultsContent = document.getElementById("resultsContent");
+      const scanCountEl = document.getElementById("scanCount");
+
+      // Start continuous monitoring
+      startBtn.addEventListener("click", async () => {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/start-monitoring",
+            {
+              method: "POST",
+            },
+          );
+          const data = await response.json();
+
+          if (data.success) {
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            scanBtn.disabled = true;
+            statusDot.classList.remove("inactive");
+            statusDot.classList.add("active");
+            statusText.textContent = "Monitoring Active";
+
+            // Connect to SSE for real-time updates
+            connectEventSource();
+          }
+        } catch (error) {
+          alert("Error starting monitoring: " + error);
+        }
+      });
+
+      // Stop monitoring
+      stopBtn.addEventListener("click", async () => {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/stop-monitoring",
+            {
+              method: "POST",
+            },
+          );
+          const data = await response.json();
+
+          if (data.success) {
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            scanBtn.disabled = false;
+            statusDot.classList.remove("active");
+            statusDot.classList.add("inactive");
+            statusText.textContent = "Inactive";
+
+            // Disconnect SSE
+            if (eventSource) {
+              eventSource.close();
+              eventSource = null;
+            }
+          }
+        } catch (error) {
+          alert("Error stopping monitoring: " + error);
+        }
+      });
+
+      // Single scan
+      scanBtn.addEventListener("click", async () => {
+        resultsContent.innerHTML =
+          '<div class="loading"><div class="spinner"></div><p>Scanning...</p></div>';
+
+        try {
+          const response = await fetch("http://localhost:3000/api/scan-once");
+          const data = await response.json();
+
+          if (data.success) {
+            displayScanResult(data.result);
+          }
+        } catch (error) {
+          resultsContent.innerHTML = `<div class="no-results">Error: ${error}</div>`;
+        }
+      });
+
+      // Connect to Server-Sent Events
+      function connectEventSource() {
+        eventSource = new EventSource("http://localhost:3000/api/events");
+
+        eventSource.onmessage = (event) => {
+          const result = JSON.parse(event.data);
+          displayScanResult(result);
+        };
+
+        eventSource.onerror = () => {
+          console.error("SSE connection error");
+        };
+      }
+
+      // Display scan result
+      function displayScanResult(result) {
+        scanCount++;
+        scanCountEl.textContent = scanCount;
+
+        const isClean = !result.hasRemoteAccess;
+        const timestamp = new Date(result.scanTime).toLocaleString();
+
+        const resultHTML = `
+                <div class="scan-result ${isClean ? "clean" : "threat"}">
+                    <div class="scan-time">🕐 ${timestamp}</div>
+                    <div class="scan-summary ${isClean ? "clean" : "threat"}">
+                        ${isClean ? "✅ SYSTEM CLEAN" : "⚠️ THREAT DETECTED"}
+                    </div>
+                    <div><strong>${result.summary}</strong></div>
+                    ${
+                      result.detections.length > 0
+                        ? `
+                        <div style="margin-top: 15px;">
+                            ${result.detections
+                              .map(
+                                (d) => `
+                                <div class="detection-item">
+                                    <span class="severity-badge severity-${d.severity}">${d.severity.toUpperCase()}</span>
+                                    <strong>[${d.detectorType}]</strong> ${d.details}
+                                </div>
+                            `,
+                              )
+                              .join("")}
+                        </div>
+                    `
+                        : ""
+                    }
+                </div>
+            `;
+
+        // Prepend new result (show latest first)
+        resultsContent.innerHTML = resultHTML + resultsContent.innerHTML;
+
+        // Keep only last 10 results
+        const results = resultsContent.querySelectorAll(".scan-result");
+        if (results.length > 10) {
+          results[results.length - 1].remove();
+        }
+      }
+    </script>
+  </body>
+</html>
