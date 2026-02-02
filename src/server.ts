@@ -64,15 +64,22 @@ app.post("/api/stop-monitoring", (req: Request, res: Response) => {
     return res.json({ success: false, message: "Monitoring not running" });
   }
 
+  stopMonitoring();
+
+  res.json({ success: true, message: "Monitoring stopped" });
+});
+
+/**
+ * Helper function to stop monitoring
+ */
+function stopMonitoring() {
   isMonitoring = false;
 
   if (monitoringInterval) {
     clearInterval(monitoringInterval);
     monitoringInterval = null;
   }
-
-  res.json({ success: true, message: "Monitoring stopped" });
-});
+}
 
 /**
  * Run a single scan
@@ -107,6 +114,12 @@ app.get("/api/events", (req: Request, res: Response) => {
   // Remove client when connection closes
   req.on("close", () => {
     clients = clients.filter((client) => client !== res);
+
+    // If no clients are connected, stop monitoring
+    if (clients.length === 0 && isMonitoring) {
+      console.log("All clients disconnected. Stopping monitoring...");
+      stopMonitoring();
+    }
   });
 });
 

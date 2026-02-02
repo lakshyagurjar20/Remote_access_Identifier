@@ -73,10 +73,10 @@ npm start -- --continuous
 ##  Security
 
 This tool is **read-only** and **100% safe**:
-- ✅ Only reads system information
-- ✅ Never modifies files or registry
-- ✅ No data collection or transmission
-- ✅ Open source and transparent
+-  Only reads system information
+-  Never modifies files or registry
+-  No data collection or transmission
+-  Open source and transparent
 
 
 
