@@ -1,5 +1,6 @@
 import { SessionMonitor } from "../monitors/sessionMonitor";
 import { ScanResult } from "../types";
+import { ClientConfig } from "./config";
 
 /**
  * CLIENT AGENT
@@ -7,13 +8,11 @@ import { ScanResult } from "../types";
  */
 export class ClientAgent {
   private sessionMonitor: SessionMonitor;
-  private serverUrl: string;
-  private userId: string;
+  private config: ClientConfig;
   private reportInterval: NodeJS.Timeout | null = null;
 
-  constructor(serverUrl: string, userId: string) {
-    this.serverUrl = serverUrl;
-    this.userId = userId;
+  constructor(config: ClientConfig) {
+    this.config = config;
     this.sessionMonitor = new SessionMonitor();
   }
 
@@ -22,17 +21,20 @@ export class ClientAgent {
    */
   async start(): Promise<void> {
     console.log("🚀 Client Agent Started");
-    console.log(`   Server: ${this.serverUrl}`);
-    console.log(`   User ID: ${this.userId}`);
-    console.log(`   Monitoring interval: 10 seconds\n`);
+    console.log(`   Server: ${this.config.serverUrl}`);
+    console.log(`   User ID: ${this.config.userId}`);
+    console.log(`   Computer: ${this.config.computerName}`);
+    console.log(
+      `   Monitoring interval: ${this.config.reportInterval / 1000}s\n`,
+    );
 
     // Run initial scan
     await this.performScan();
 
-    // Schedule periodic scans every 10 seconds
+    // Schedule periodic scans
     this.reportInterval = setInterval(async () => {
       await this.performScan();
-    }, 10000);
+    }, this.config.reportInterval);
   }
 
   /**
