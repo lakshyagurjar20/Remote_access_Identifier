@@ -57,9 +57,11 @@ export class ClientAgent {
 
       // For now, just log the result (we'll add server reporting in next step)
       console.log(`[${new Date().toLocaleTimeString()}] Scan completed`);
-      console.log(`   Status: ${scanResult.overallStatus}`);
       console.log(
-        `   Threats found: ${scanResult.results.filter((r) => r.isDetected).length}`,
+        `   Status: ${scanResult.hasRemoteAccess ? "THREAT DETECTED" : "Clean"}`,
+      );
+      console.log(
+        `   Threats found: ${scanResult.detections.filter((r) => r.isDetected).length}`,
       );
 
       // TODO: Send report to server (next step)

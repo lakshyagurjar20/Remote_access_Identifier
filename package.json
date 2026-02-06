@@ -9,7 +9,8 @@
     "dev": "ts-node src/main.ts",
     "test": "jest",
     "monitor": "ts-node src/main.ts --continuous",
-    "ui": "ts-node src/server.ts"
+    "ui": "ts-node src/server.ts",
+    "client": "ts-node src/client/index.ts"
   },
   "dependencies": {
     "chalk": "^4.1.2",
