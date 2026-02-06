@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": 1,
+    "userId": "Lay-1770397118661",
+    "computerName": "Lay",
+    "timestamp": "2026-02-06T16:58:38.817Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-06T16:58:38.782Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-06T16:58:38.717Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-06T16:58:38.683Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 2,
+    "userId": "Lay-1770397118661",
+    "computerName": "Lay",
+    "timestamp": "2026-02-06T16:58:48.965Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-06T16:58:48.958Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-06T16:58:48.934Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-06T16:58:48.910Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 3,
+    "userId": "Lay-1770397118661",
+    "computerName": "Lay",
+    "timestamp": "2026-02-06T16:58:59.039Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-06T16:58:59.030Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-06T16:58:58.966Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-06T16:58:58.915Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  }
+]

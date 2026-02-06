@@ -38,7 +38,7 @@ SERVER_URL=http://your-server.com:4000 USER_ID=laptop-001 REPORT_INTERVAL=5000 n
 
 | Variable          | Description                       | Default                      |
 | ----------------- | --------------------------------- | ---------------------------- |
-| `SERVER_URL`      | Central server URL                | `http://localhost:4000`      |
+| `SERVER_URL`      | Central server URL                | `http://localhost:8082`      |
 | `USER_ID`         | Unique identifier for this client | Auto-generated from hostname |
 | `REPORT_INTERVAL` | Report interval in milliseconds   | `10000` (10 seconds)         |
 

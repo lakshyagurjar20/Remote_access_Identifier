@@ -18,7 +18,7 @@ export interface ClientConfig {
  */
 export function loadClientConfig(): ClientConfig {
   return {
-    serverUrl: process.env.SERVER_URL || "http://localhost:4000",
+    serverUrl: process.env.SERVER_URL || "http://localhost:8082",
     userId: process.env.USER_ID || generateUserId(),
     reportInterval: parseInt(process.env.REPORT_INTERVAL || "10000"), // 10 seconds
     computerName: os.hostname(),
