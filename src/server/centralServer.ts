@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import path from "path";
 import { MonitoringDatabase } from "./database";
 import { ClientReport, ClientStatus } from "./types";
 
@@ -14,6 +15,9 @@ const db = new MonitoringDatabase();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, "../../public")));
 
 // In-memory cache of connected clients
 const connectedClients = new Map<string, ClientStatus>();
