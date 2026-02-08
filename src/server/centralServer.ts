@@ -153,6 +153,9 @@ app.listen(PORT, () => {
   console.log(`   - GET  /api/admin/reports`);
   console.log(`📥 Client endpoint:`);
   console.log(`   - POST /api/client/report`);
+  console.log("═══════════════════════════════════════════");
+  console.log(`\n🌐 Admin Dashboard:`);
+  console.log(`   👉 http://localhost:${PORT}/admin/dashboard.html`);
   console.log("═══════════════════════════════════════════\n");
   console.log("Waiting for client connections...\n");
 });

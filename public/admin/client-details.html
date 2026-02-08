@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Details - Remote Access Monitoring</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .back-button {
+        background: white;
+        color: #667eea;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+      }
+
+      .back-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .header-card {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+      }
+
+      .header-card h1 {
+        color: #333;
+        font-size: 28px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .status-clean {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .status-threat {
+        background: #f8d7da;
+        color: #721c24;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      .client-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .info-label {
+        font-size: 12px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .info-value {
+        font-size: 16px;
+        color: #333;
+        font-weight: 600;
+      }
+
+      .section {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        overflow: hidden;
+      }
+
+      .section-header {
+        background: #f8f9fa;
+        padding: 20px 25px;
+        border-bottom: 2px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .section-header h2 {
+        color: #333;
+        font-size: 20px;
+      }
+
+      .section-content {
+        padding: 25px;
+      }
+
+      .detection-card {
+        background: #f8f9fa;
+        border-left: 4px solid #6c757d;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+
+      .detection-card.detected {
+        background: #fff3cd;
+        border-left-color: #ffc107;
+      }
+
+      .detection-card.critical {
+        background: #f8d7da;
+        border-left-color: #dc3545;
+      }
+
+      .detection-card.high {
+        background: #ffe5d0;
+        border-left-color: #fd7e14;
+      }
+
+      .detection-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .detection-type {
+        font-weight: 600;
+        font-size: 16px;
+        color: #333;
+        text-transform: uppercase;
+      }
+
+      .severity-badge {
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .severity-critical {
+        background: #dc3545;
+        color: white;
+      }
+
+      .severity-high {
+        background: #fd7e14;
+        color: white;
+      }
+
+      .severity-medium {
+        background: #ffc107;
+        color: #333;
+      }
+
+      .severity-low {
+        background: #6c757d;
+        color: white;
+      }
+
+      .detection-details {
+        color: #555;
+        margin-bottom: 10px;
+        line-height: 1.6;
+      }
+
+      .detected-items {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #dee2e6;
+      }
+
+      .detected-items h4 {
+        color: #333;
+        font-size: 14px;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .item-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .item-list li {
+        background: white;
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        border-left: 3px solid #dc3545;
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+        color: #333;
+      }
+
+      .history-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .history-table th {
+        background: #f8f9fa;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        color: #666;
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      .history-table td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        color: #333;
+      }
+
+      .history-table tr:hover {
+        background: #f8f9fa;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 60px 20px;
+        color: #666;
+        font-size: 18px;
+      }
+
+      .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .refresh-info {
+        text-align: center;
+        padding: 15px;
+        color: #999;
+        font-size: 12px;
+        border-top: 1px solid #eee;
+      }
+
+      code {
+        background: #f1f3f5;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <button class="back-button" onclick="window.close()">
+        ← Back to Dashboard
+      </button>
+
+      <div id="loadingState" class="header-card">
+        <div class="loading">🔍 Loading client details...</div>
+      </div>
+
+      <div id="errorState" style="display: none" class="header-card">
+        <div class="error-message" id="errorMessage"></div>
+      </div>
+
+      <div id="contentState" style="display: none">
+        <!-- Client Header -->
+        <div class="header-card">
+          <h1>
+            <span id="clientIcon">💻</span>
+            <span id="clientName">Client Details</span>
+            <span id="clientStatus" class="status-badge">-</span>
+          </h1>
+          <div class="client-info">
+            <div class="info-item">
+              <span class="info-label">Computer Name</span>
+              <span class="info-value" id="computerName">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Username</span>
+              <span class="info-value" id="username">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Platform</span>
+              <span class="info-value" id="platform">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Last Seen</span>
+              <span class="info-value" id="lastSeen">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">User ID</span>
+              <span class="info-value" id="userId" style="font-size: 13px"
+                >-</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Current Detection Status -->
+        <div class="section">
+          <div class="section-header">
+            <h2>🔍 Current Detection Status</h2>
+          </div>
+          <div class="section-content" id="detectionsContent">
+            <div class="empty-state">No detection data available</div>
+          </div>
+        </div>
+
+        <!-- Scan History -->
+        <div class="section">
+          <div class="section-header">
+            <h2>📊 Scan History</h2>
+          </div>
+          <div class="section-content">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Status</th>
+                  <th>Severity</th>
+                  <th>Detections</th>
+                </tr>
+              </thead>
+              <tbody id="historyTableBody">
+                <tr>
+                  <td colspan="4" class="loading">Loading history...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="refresh-info" id="refreshInfo">
+            Auto-refreshing every 10 seconds...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const SERVER_URL = "http://localhost:8082";
+      let userId = null;
+      let autoRefreshInterval = null;
+
+      // Get userId from URL parameter
+      function getUserIdFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("userId");
+      }
+
+      async function loadClientDetails() {
+        userId = getUserIdFromURL();
+
+        if (!userId) {
+          showError("No client ID provided in URL");
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `${SERVER_URL}/api/admin/clients/${encodeURIComponent(userId)}`,
+          );
+
+          if (!response.ok) {
+            throw new Error(
+              `Server returned ${response.status}: ${response.statusText}`,
+            );
+          }
+
+          const data = await response.json();
+          renderClientDetails(data);
+        } catch (error) {
+          console.error("Error loading client details:", error);
+          showError(`Failed to load client details: ${error.message}`);
+        }
+      }
+
+      function renderClientDetails(data) {
+        const { client, history } = data;
+
+        if (!client) {
+          showError("Client not found");
+          return;
+        }
+
+        // Hide loading, show content
+        document.getElementById("loadingState").style.display = "none";
+        document.getElementById("contentState").style.display = "block";
+
+        // Header information
+        document.getElementById("clientIcon").textContent = getPlatformIcon(
+          client.systemInfo.platform,
+        );
+        document.getElementById("clientName").textContent = client.computerName;
+
+        const statusBadge = document.getElementById("clientStatus");
+        statusBadge.textContent =
+          client.status === "threat" ? "🚨 THREAT DETECTED" : "✅ CLEAN";
+        statusBadge.className = `status-badge ${client.status === "threat" ? "status-threat" : "status-clean"}`;
+
+        document.getElementById("computerName").textContent =
+          client.computerName;
+        document.getElementById("username").textContent =
+          client.systemInfo.username;
+        document.getElementById("platform").textContent =
+          client.systemInfo.platform;
+        document.getElementById("lastSeen").textContent = formatTime(
+          client.lastSeen,
+        );
+        document.getElementById("userId").textContent = client.userId;
+
+        // Detections
+        renderDetections(client.detections);
+
+        // History
+        renderHistory(history);
+      }
+
+      function renderDetections(detections) {
+        const container = document.getElementById("detectionsContent");
+
+        if (!detections || detections.length === 0) {
+          container.innerHTML =
+            '<div class="empty-state">No detection data available</div>';
+          return;
+        }
+
+        container.innerHTML = detections
+          .map((detection) => {
+            const cardClass = detection.isDetected
+              ? `detected ${detection.severity}`
+              : "";
+
+            return `
+                    <div class="detection-card ${cardClass}">
+                        <div class="detection-header">
+                            <span class="detection-type">
+                                ${getDetectionIcon(detection.detectorType)} ${detection.detectorType.toUpperCase()} Detection
+                            </span>
+                            <span class="severity-badge severity-${detection.severity}">
+                                ${detection.severity}
+                            </span>
+                        </div>
+                        <div class="detection-details">
+                            ${detection.details}
+                        </div>
+                        ${
+                          detection.detectedItems &&
+                          detection.detectedItems.length > 0
+                            ? `
+                            <div class="detected-items">
+                                <h4>${getDetectedItemsLabel(detection.detectorType)}:</h4>
+                                <ul class="item-list">
+                                    ${detection.detectedItems.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+                                </ul>
+                            </div>
+                        `
+                            : ""
+                        }
+                        <div style="margin-top: 10px; font-size: 12px; color: #999;">
+                            Scanned at: ${new Date(detection.timestamp).toLocaleString()}
+                        </div>
+                    </div>
+                `;
+          })
+          .join("");
+      }
+
+      function renderHistory(history) {
+        const tbody = document.getElementById("historyTableBody");
+
+        if (!history || history.length === 0) {
+          tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="empty-state">No scan history available</td>
+                    </tr>
+                `;
+          return;
+        }
+
+        tbody.innerHTML = history
+          .map((record) => {
+            const detections =
+              typeof record.detections === "string"
+                ? JSON.parse(record.detections)
+                : record.detections;
+
+            const detectedCount = detections.filter((d) => d.isDetected).length;
+
+            return `
+                    <tr>
+                        <td>${new Date(record.timestamp).toLocaleString()}</td>
+                        <td>
+                            <span class="status-badge ${record.status === "threat" ? "status-threat" : "status-clean"}">
+                                ${record.status === "threat" ? "🚨 THREAT" : "✅ CLEAN"}
+                            </span>
+                        </td>
+                        <td>
+                            ${
+                              record.severity
+                                ? `<span class="severity-badge severity-${record.severity}">${record.severity}</span>`
+                                : "-"
+                            }
+                        </td>
+                        <td>${detectedCount} detection${detectedCount !== 1 ? "s" : ""}</td>
+                    </tr>
+                `;
+          })
+          .join("");
+      }
+
+      function getDetectionIcon(type) {
+        switch (type) {
+          case "process":
+            return "⚙️";
+          case "network":
+            return "🌐";
+          case "registry":
+            return "📋";
+          default:
+            return "🔍";
+        }
+      }
+
+      function getDetectedItemsLabel(type) {
+        switch (type) {
+          case "process":
+            return "Detected Processes";
+          case "network":
+            return "Detected Ports/Connections";
+          case "registry":
+            return "Detected Registry Entries";
+          default:
+            return "Detected Items";
+        }
+      }
+
+      function getPlatformIcon(platform) {
+        if (platform.includes("win")) return "🪟";
+        if (platform.includes("darwin")) return "🍎";
+        if (platform.includes("linux")) return "🐧";
+        return "💻";
+      }
+
+      function formatTime(timestamp) {
+        const date = new Date(timestamp);
+        const now = new Date();
+        const diff = now - date;
+
+        if (diff < 60000) return "Just now";
+        if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
+        if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+        return date.toLocaleString();
+      }
+
+      function showError(message) {
+        document.getElementById("loadingState").style.display = "none";
+        document.getElementById("errorState").style.display = "block";
+        document.getElementById("errorMessage").textContent = `❌ ${message}`;
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // Auto-refresh
+      function startAutoRefresh() {
+        loadClientDetails();
+        autoRefreshInterval = setInterval(loadClientDetails, 10000);
+      }
+
+      // Start when page loads
+      window.addEventListener("load", startAutoRefresh);
+
+      // Stop auto-refresh when page unloads
+      window.addEventListener("beforeunload", () => {
+        if (autoRefreshInterval) {
+          clearInterval(autoRefreshInterval);
+        }
+      });
+    </script>
+  </body>
+</html>

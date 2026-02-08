@@ -228,5 +228,245 @@
     "severity": "critical",
     "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T13:55:35.891Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T13:55:35.864Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T13:55:35.835Z\",\"severity\":\"low\"}]",
     "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 24,
+    "userId": "Lay-1770472921630",
+    "computerName": "Lay",
+    "timestamp": "2026-02-07T14:02:01.749Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T14:02:01.720Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T14:02:01.672Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T14:02:01.646Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 25,
+    "userId": "Lay-1770472921630",
+    "computerName": "Lay",
+    "timestamp": "2026-02-07T14:02:11.899Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T14:02:11.877Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T14:02:11.831Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T14:02:11.807Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 26,
+    "userId": "Lay-1770472921630",
+    "computerName": "Lay",
+    "timestamp": "2026-02-07T14:02:21.921Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T14:02:21.895Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T14:02:21.850Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T14:02:21.822Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 27,
+    "userId": "Lay-1770472921630",
+    "computerName": "Lay",
+    "timestamp": "2026-02-07T14:02:31.984Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T14:02:31.951Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T14:02:31.869Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T14:02:31.838Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 28,
+    "userId": "Lay-1770472921630",
+    "computerName": "Lay",
+    "timestamp": "2026-02-07T14:02:41.905Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T14:02:41.897Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T14:02:41.863Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T14:02:41.842Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 29,
+    "userId": "Lay-1770472921630",
+    "computerName": "Lay",
+    "timestamp": "2026-02-07T14:02:51.929Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T14:02:51.921Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T14:02:51.883Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T14:02:51.860Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 30,
+    "userId": "Lay-1770472921630",
+    "computerName": "Lay",
+    "timestamp": "2026-02-07T14:03:02.000Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T14:03:01.970Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T14:03:01.907Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T14:03:01.876Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 31,
+    "userId": "Lay-1770473090894",
+    "computerName": "Lay",
+    "timestamp": "2026-02-07T14:04:51.034Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T14:04:51.003Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T14:04:50.935Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T14:04:50.910Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 32,
+    "userId": "Lay-1770473090894",
+    "computerName": "Lay",
+    "timestamp": "2026-02-07T14:05:01.168Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T14:05:01.157Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T14:05:01.117Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T14:05:01.097Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 33,
+    "userId": "Lay-1770473090894",
+    "computerName": "Lay",
+    "timestamp": "2026-02-07T14:05:11.171Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T14:05:11.162Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T14:05:11.131Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T14:05:11.107Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 34,
+    "userId": "Lay-1770473090894",
+    "computerName": "Lay",
+    "timestamp": "2026-02-07T14:05:21.181Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-07T14:05:21.171Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-07T14:05:21.137Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-07T14:05:21.115Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 35,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:16:08.977Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-08T06:16:08.973Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:16:08.953Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:16:08.943Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 36,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:16:18.998Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-08T06:16:18.995Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:16:18.986Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:16:18.966Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 37,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:16:29.030Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-08T06:16:29.012Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:16:29.000Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:16:28.973Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 38,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:16:39.048Z",
+    "status": "threat",
+    "severity": "critical",
+    "detections": "[{\"isDetected\":true,\"detectorType\":\"process\",\"details\":\"Found 1 remote desktop application(s) running: TeamViewer\",\"timestamp\":\"2026-02-08T06:16:39.015Z\",\"severity\":\"critical\",\"detectedItems\":[\"TeamViewer\"]},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:16:39.017Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:16:38.986Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 39,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:16:49.056Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-08T06:16:49.045Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:16:49.032Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:16:49.006Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 40,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:16:59.039Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-08T06:16:59.027Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:16:59.022Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:16:58.996Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 41,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:17:09.062Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-08T06:17:09.044Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:17:09.046Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:17:09.006Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 42,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:17:19.054Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-08T06:17:19.045Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:17:19.046Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:17:19.013Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 43,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:17:29.078Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-08T06:17:29.063Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:17:29.054Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:17:29.027Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 44,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:17:39.070Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-08T06:17:39.065Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:17:39.048Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:17:39.027Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 45,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:17:49.076Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-08T06:17:49.070Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:17:49.062Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:17:49.039Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 46,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:17:59.089Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-08T06:17:59.079Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:17:59.082Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:17:59.044Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
+  },
+  {
+    "id": 47,
+    "userId": "Lay-1770531358741",
+    "computerName": "Lay",
+    "timestamp": "2026-02-08T06:18:09.102Z",
+    "status": "clean",
+    "severity": "low",
+    "detections": "[{\"isDetected\":false,\"detectorType\":\"process\",\"details\":\"No remote desktop processes detected\",\"timestamp\":\"2026-02-08T06:18:09.096Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"network\",\"details\":\"No remote desktop ports detected\",\"timestamp\":\"2026-02-08T06:18:09.088Z\",\"severity\":\"low\"},{\"isDetected\":false,\"detectorType\":\"registry\",\"details\":\"No remote desktop registry entries detected\",\"timestamp\":\"2026-02-08T06:18:09.058Z\",\"severity\":\"low\"}]",
+    "systemInfo": "{\"platform\":\"win32\",\"hostname\":\"Lay\",\"username\":\"laksh\"}"
   }
 ]
