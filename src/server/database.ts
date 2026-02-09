@@ -1,116 +1,272 @@
-import * as fs from "fs";
-import * as path from "path";
-import { ClientReport, DatabaseReport } from "./types";
+import { MongoClient, Db, Collection, ObjectId } from "mongodb";
+import { mongoConfig } from "../config/mongoConfig";
+import { ClientReport } from "./types";
 
 /**
- * DATABASE LAYER (JSON-based)
- * Handles all database operations for storing client reports
+ * MONGODB DATABASE LAYER
+ * Handles all database operations for storing client reports in MongoDB
  */
+
+/**
+ * Document structure in MongoDB
+ */
+export interface ReportDocument {
+  _id?: ObjectId;
+  userId: string;
+  computerName: string;
+  timestamp: Date;
+  status: "clean" | "threat";
+  severity: string;
+  detections: any[];
+  systemInfo: {
+    platform: string;
+    hostname: string;
+    username: string;
+  };
+  createdAt: Date;
+}
+
 export class MonitoringDatabase {
-  private dbPath: string;
-  private reports: DatabaseReport[] = [];
+  private client: MongoClient;
+  private db: Db | null = null;
+  private reportsCollection: Collection<ReportDocument> | null = null;
+  private isConnected: boolean = false;
 
-  constructor(dbPath: string = "./data/monitoring.json") {
-    this.dbPath = dbPath;
-
-    // Ensure data directory exists
-    const dir = path.dirname(dbPath);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-
-    // Load existing data
-    this.loadData();
-    console.log("✅ Database initialized");
+  constructor() {
+    this.client = new MongoClient(mongoConfig.uri);
   }
 
   /**
-   * Load data from JSON file
+   * Connect to MongoDB
    */
-  private loadData(): void {
+  async connect(): Promise<void> {
     try {
-      if (fs.existsSync(this.dbPath)) {
-        const data = fs.readFileSync(this.dbPath, "utf-8");
-        this.reports = JSON.parse(data);
-        console.log(`📂 Loaded ${this.reports.length} existing reports`);
-      }
+      await this.client.connect();
+      this.db = this.client.db(mongoConfig.database);
+      this.reportsCollection = this.db.collection<ReportDocument>(
+        mongoConfig.collections.reports,
+      );
+
+      // Create indexes for better query performance
+      await this.createIndexes();
+
+      this.isConnected = true;
+      console.log("✅ MongoDB connected successfully");
+      console.log(`   Database: ${mongoConfig.database}`);
+      console.log(`   Collection: ${mongoConfig.collections.reports}`);
     } catch (error) {
-      console.error("Error loading database:", error);
-      this.reports = [];
+      console.error("❌ MongoDB connection error:", error);
+      throw error;
     }
   }
 
   /**
-   * Save data to JSON file
+   * Create database indexes
    */
-  private saveData(): void {
+  private async createIndexes(): Promise<void> {
+    if (!this.reportsCollection) return;
+
     try {
-      fs.writeFileSync(this.dbPath, JSON.stringify(this.reports, null, 2));
+      // Index on userId for faster client-specific queries
+      await this.reportsCollection.createIndex({ userId: 1 });
+
+      // Index on timestamp for time-based queries
+      await this.reportsCollection.createIndex({ timestamp: -1 });
+
+      // Compound index for userId and timestamp
+      await this.reportsCollection.createIndex({ userId: 1, timestamp: -1 });
+
+      // Index on status for filtering threats
+      await this.reportsCollection.createIndex({ status: 1 });
+
+      console.log("📊 Database indexes created");
     } catch (error) {
-      console.error("Error saving database:", error);
+      console.error("Error creating indexes:", error);
     }
   }
 
   /**
-   * Save a client report to the database
+   * Check if database is connected
    */
-  saveReport(report: ClientReport): void {
-    const dbReport: DatabaseReport = {
-      id: this.reports.length + 1,
-      userId: report.userId,
-      computerName: report.computerName,
-      timestamp: report.timestamp,
-      status: report.status,
-      severity: report.severity,
-      detections: JSON.stringify(report.detections),
-      systemInfo: JSON.stringify(report.systemInfo),
-    };
+  private ensureConnected(): void {
+    if (!this.isConnected || !this.reportsCollection) {
+      throw new Error("Database not connected. Call connect() first.");
+    }
+  }
 
-    this.reports.push(dbReport);
-    this.saveData();
+  /**
+   * Save a client report to MongoDB
+   */
+  async saveReport(report: ClientReport): Promise<void> {
+    this.ensureConnected();
+
+    try {
+      const document: ReportDocument = {
+        userId: report.userId,
+        computerName: report.computerName,
+        timestamp: new Date(report.timestamp),
+        status: report.status,
+        severity: report.severity,
+        detections: report.detections,
+        systemInfo: report.systemInfo,
+        createdAt: new Date(),
+      };
+
+      await this.reportsCollection!.insertOne(document);
+    } catch (error) {
+      console.error("Error saving report to MongoDB:", error);
+      throw error;
+    }
   }
 
   /**
    * Get recent history for a specific client
    */
-  getClientHistory(userId: string, limit: number = 100): DatabaseReport[] {
-    return this.reports
-      .filter((r) => r.userId === userId)
-      .slice(-limit)
-      .reverse();
+  async getClientHistory(
+    userId: string,
+    limit: number = 100,
+  ): Promise<ReportDocument[]> {
+    this.ensureConnected();
+
+    try {
+      return await this.reportsCollection!.find({ userId })
+        .sort({ timestamp: -1 })
+        .limit(limit)
+        .toArray();
+    } catch (error) {
+      console.error("Error getting client history:", error);
+      return [];
+    }
   }
 
   /**
    * Get all reports (for admin view)
    */
-  getAllReports(limit: number = 1000): DatabaseReport[] {
-    return this.reports.slice(-limit).reverse();
+  async getAllReports(limit: number = 1000): Promise<ReportDocument[]> {
+    this.ensureConnected();
+
+    try {
+      return await this.reportsCollection!.find({})
+        .sort({ timestamp: -1 })
+        .limit(limit)
+        .toArray();
+    } catch (error) {
+      console.error("Error getting all reports:", error);
+      return [];
+    }
   }
 
   /**
    * Get latest report for each client
    */
-  getLatestReports(): DatabaseReport[] {
-    const latestMap = new Map<string, DatabaseReport>();
+  async getLatestReports(): Promise<ReportDocument[]> {
+    this.ensureConnected();
 
-    for (const report of this.reports) {
-      if (
-        !latestMap.has(report.userId) ||
-        new Date(report.timestamp) >
-          new Date(latestMap.get(report.userId)!.timestamp)
-      ) {
-        latestMap.set(report.userId, report);
-      }
+    try {
+      // Use MongoDB aggregation to get the latest report per client
+      const pipeline = [
+        {
+          $sort: { timestamp: -1 },
+        },
+        {
+          $group: {
+            _id: "$userId",
+            latestReport: { $first: "$$ROOT" },
+          },
+        },
+        {
+          $replaceRoot: { newRoot: "$latestReport" },
+        },
+        {
+          $sort: { timestamp: -1 },
+        },
+      ];
+
+      return await this.reportsCollection!.aggregate<ReportDocument>(
+        pipeline,
+      ).toArray();
+    } catch (error) {
+      console.error("Error getting latest reports:", error);
+      return [];
     }
-
-    return Array.from(latestMap.values());
   }
 
   /**
-   * Close database connection (not needed for JSON, but kept for compatibility)
+   * Get statistics about the database
    */
-  close(): void {
-    this.saveData();
-    console.log("💾 Database saved");
+  async getStats(): Promise<{
+    totalReports: number;
+    totalClients: number;
+    threatsDetected: number;
+    cleanSystems: number;
+  }> {
+    this.ensureConnected();
+
+    try {
+      const totalReports = await this.reportsCollection!.countDocuments();
+
+      // Get unique clients count
+      const uniqueClients = await this.reportsCollection!.distinct(
+        "userId",
+      ).then((users) => users.length);
+
+      // Get latest reports to count threats
+      const latestReports = await this.getLatestReports();
+      const threatsDetected = latestReports.filter(
+        (r) => r.status === "threat",
+      ).length;
+      const cleanSystems = latestReports.filter(
+        (r) => r.status === "clean",
+      ).length;
+
+      return {
+        totalReports,
+        totalClients: uniqueClients,
+        threatsDetected,
+        cleanSystems,
+      };
+    } catch (error) {
+      console.error("Error getting stats:", error);
+      return {
+        totalReports: 0,
+        totalClients: 0,
+        threatsDetected: 0,
+        cleanSystems: 0,
+      };
+    }
+  }
+
+  /**
+   * Delete old reports (cleanup)
+   */
+  async deleteOldReports(daysToKeep: number = 30): Promise<number> {
+    this.ensureConnected();
+
+    try {
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - daysToKeep);
+
+      const result = await this.reportsCollection!.deleteMany({
+        timestamp: { $lt: cutoffDate },
+      });
+
+      return result.deletedCount;
+    } catch (error) {
+      console.error("Error deleting old reports:", error);
+      return 0;
+    }
+  }
+
+  /**
+   * Close database connection
+   */
+  async close(): Promise<void> {
+    try {
+      await this.client.close();
+      this.isConnected = false;
+      console.log("💾 MongoDB connection closed");
+    } catch (error) {
+      console.error("Error closing MongoDB connection:", error);
+    }
   }
 }

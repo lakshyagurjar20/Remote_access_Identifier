@@ -3,6 +3,7 @@ import cors from "cors";
 import path from "path";
 import { MonitoringDatabase } from "./database";
 import { ClientReport, ClientStatus } from "./types";
+import { displayMongoConfig } from "../config/mongoConfig";
 
 /**
  * CENTRAL SERVER
@@ -25,7 +26,7 @@ const connectedClients = new Map<string, ClientStatus>();
 /**
  * CLIENT ENDPOINT: Receive report from client
  */
-app.post("/api/client/report", (req: Request, res: Response) => {
+app.post("/api/client/report", async (req: Request, res: Response) => {
   try {
     const report: ClientReport = req.body;
 
@@ -44,8 +45,8 @@ app.post("/api/client/report", (req: Request, res: Response) => {
       isOnline: true,
     });
 
-    // Save to database
-    db.saveReport(report);
+    // Save to database (async)
+    await db.saveReport(report);
 
     // Alert if threat detected
     if (report.status === "threat") {
@@ -83,7 +84,7 @@ app.get("/api/admin/clients", (req: Request, res: Response) => {
 /**
  * ADMIN ENDPOINT: Get specific client details with history
  */
-app.get("/api/admin/clients/:userId", (req: Request, res: Response) => {
+app.get("/api/admin/clients/:userId", async (req: Request, res: Response) => {
   const userId = req.params.userId as string;
   const client = connectedClients.get(userId);
 
@@ -91,8 +92,8 @@ app.get("/api/admin/clients/:userId", (req: Request, res: Response) => {
     return res.status(404).json({ error: "Client not found" });
   }
 
-  // Get historical data
-  const history = db.getClientHistory(userId, 100);
+  // Get historical data (async)
+  const history = await db.getClientHistory(userId, 100);
 
   res.json({
     client: {
@@ -122,9 +123,9 @@ app.get("/api/admin/stats", (req: Request, res: Response) => {
 /**
  * ADMIN ENDPOINT: Get all reports from database
  */
-app.get("/api/admin/reports", (req: Request, res: Response) => {
+app.get("/api/admin/reports", async (req: Request, res: Response) => {
   const limit = parseInt(req.query.limit as string) || 1000;
-  const reports = db.getAllReports(limit);
+  const reports = await db.getAllReports(limit);
   res.json({ reports });
 });
 
@@ -141,28 +142,46 @@ function isClientOnline(lastSeen: Date): boolean {
  * Start server
  */
 const PORT = 8082;
-app.listen(PORT, () => {
-  console.log("╔════════════════════════════════════════╗");
-  console.log("║     CENTRAL MONITORING SERVER          ║");
-  console.log("╚════════════════════════════════════════╝");
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📊 Admin API available at:`);
-  console.log(`   - GET  /api/admin/stats`);
-  console.log(`   - GET  /api/admin/clients`);
-  console.log(`   - GET  /api/admin/clients/:userId`);
-  console.log(`   - GET  /api/admin/reports`);
-  console.log(`📥 Client endpoint:`);
-  console.log(`   - POST /api/client/report`);
-  console.log("═══════════════════════════════════════════");
-  console.log(`\n🌐 Admin Dashboard:`);
-  console.log(`   👉 http://localhost:${PORT}/admin/dashboard.html`);
-  console.log("═══════════════════════════════════════════\n");
-  console.log("Waiting for client connections...\n");
-});
+
+async function startServer() {
+  try {
+    // Display MongoDB configuration
+    displayMongoConfig();
+
+    // Connect to MongoDB
+    await db.connect();
+
+    // Start Express server
+    app.listen(PORT, () => {
+      console.log("╔════════════════════════════════════════╗");
+      console.log("║     CENTRAL MONITORING SERVER          ║");
+      console.log("╚════════════════════════════════════════╝");
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(`📊 Admin API available at:`);
+      console.log(`   - GET  /api/admin/stats`);
+      console.log(`   - GET  /api/admin/clients`);
+      console.log(`   - GET  /api/admin/clients/:userId`);
+      console.log(`   - GET  /api/admin/reports`);
+      console.log(`📥 Client endpoint:`);
+      console.log(`   - POST /api/client/report`);
+      console.log("═══════════════════════════════════════════");
+      console.log(`\n🌐 Admin Dashboard:`);
+      console.log(`   👉 http://localhost:${PORT}/admin/dashboard.html`);
+      console.log("═══════════════════════════════════════════\n");
+      console.log("Waiting for client connections...\n");
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+    process.exit(1);
+  }
+}
+
+// Start the server
+startServer();
 
 // Graceful shutdown
-process.on("SIGINT", () => {
+process.on("SIGINT", async () => {
   console.log("\n🛑 Shutting down server...");
-  db.close();
+  await db.close();
   process.exit(0);
 });
