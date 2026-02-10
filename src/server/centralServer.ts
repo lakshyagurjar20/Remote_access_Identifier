@@ -45,11 +45,9 @@ app.post("/api/client/report", async (req: Request, res: Response) => {
       isOnline: true,
     });
 
-    // Save to database (async)
-    await db.saveReport(report);
-
-    // Alert if threat detected
+    // Save to database ONLY if threat detected
     if (report.status === "threat") {
+      await db.saveReport(report);
       console.log("🚨 THREAT ALERT!");
       console.log(`   Computer: ${report.computerName}`);
       console.log(`   User: ${report.userId}`);
@@ -60,6 +58,8 @@ app.post("/api/client/report", async (req: Request, res: Response) => {
           .map((d) => d.detectorType)
           .join(", ")}`,
       );
+    } else {
+      console.log("✅ Clean scan - not saved to database");
     }
 
     res.json({ success: true, message: "Report received" });
