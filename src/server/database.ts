@@ -51,11 +51,11 @@ export class MonitoringDatabase {
       await this.createIndexes();
 
       this.isConnected = true;
-      console.log("✅ MongoDB connected successfully");
+      console.log(" MongoDB connected successfully");
       console.log(`   Database: ${mongoConfig.database}`);
       console.log(`   Collection: ${mongoConfig.collections.reports}`);
     } catch (error) {
-      console.error("❌ MongoDB connection error:", error);
+      console.error(" MongoDB connection error:", error);
       throw error;
     }
   }
@@ -79,7 +79,7 @@ export class MonitoringDatabase {
       // Index on status for filtering threats
       await this.reportsCollection.createIndex({ status: 1 });
 
-      console.log("📊 Database indexes created");
+      console.log(" Database indexes created");
     } catch (error) {
       console.error("Error creating indexes:", error);
     }
@@ -264,7 +264,7 @@ export class MonitoringDatabase {
     try {
       await this.client.close();
       this.isConnected = false;
-      console.log("💾 MongoDB connection closed");
+      console.log(" MongoDB connection closed");
     } catch (error) {
       console.error("Error closing MongoDB connection:", error);
     }
