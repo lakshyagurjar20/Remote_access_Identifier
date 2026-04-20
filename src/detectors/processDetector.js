@@ -1,41 +1,21 @@
-import psList from "ps-list";
-import { DetectionResult, ProcessInfo } from "../types";
-import { KNOWN_REMOTE_APPS } from "../config/settings";
+const psList = require("ps-list");
+const { KNOWN_REMOTE_APPS } = require("../config/settings");
 
-/**
- * PROCESS DETECTOR
- * Scans all running processes on the system and compares them against
- * known remote desktop application process names
- */
-export class ProcessDetector {
-  /**
-   * Main detection method - scans for remote desktop processes
-   */
-  async detect(): Promise<DetectionResult> {
+class ProcessDetector {
+  async detect() {
     try {
-      // Get list of all running processes
       const processes = await this.getRunningProcesses();
-
-      // Check each process against our known remote apps
-      const detectedApps: string[] = [];
-      const detectedProcesses: ProcessInfo[] = [];
+      const detectedApps = [];
 
       for (const process of processes) {
         for (const app of KNOWN_REMOTE_APPS) {
-          // Check if process name matches any known remote desktop app
           const isMatch = app.processNames.some(
-            (appProcess) =>
-              process.name.toLowerCase() === appProcess.toLowerCase(),
+            (appProcess) => process.name.toLowerCase() === appProcess.toLowerCase()
           );
-
-          if (isMatch) {
-            detectedApps.push(app.name);
-            detectedProcesses.push(process);
-          }
+          if (isMatch) detectedApps.push(app.name);
         }
       }
 
-      // Remove duplicates
       const uniqueApps = [...new Set(detectedApps)];
 
       if (uniqueApps.length > 0) {
@@ -67,13 +47,10 @@ export class ProcessDetector {
     }
   }
 
-  /**
-   * Get all running processes on the system
-   */
-  private async getRunningProcesses(): Promise<ProcessInfo[]> {
+  async getRunningProcesses() {
     try {
       const tasks = await psList();
-      return tasks.map((task: any) => ({
+      return tasks.map((task) => ({
         name: task.name,
         pid: task.pid,
         path: task.cmd || "",
@@ -84,12 +61,7 @@ export class ProcessDetector {
     }
   }
 
-  /**
-   * Calculate severity based on detected apps
-   */
-  private calculateSeverity(
-    detectedApps: string[],
-  ): "low" | "medium" | "high" | "critical" {
+  calculateSeverity(detectedApps) {
     const severities = detectedApps.map((appName) => {
       const app = KNOWN_REMOTE_APPS.find((a) => a.name === appName);
       return app?.severity || "low";
@@ -101,11 +73,10 @@ export class ProcessDetector {
     return "low";
   }
 
-  /**
-   * Quick check - returns true if any remote desktop process is running
-   */
-  async isRemoteDesktopActive(): Promise<boolean> {
+  async isRemoteDesktopActive() {
     const result = await this.detect();
     return result.isDetected;
   }
 }
+
+module.exports = { ProcessDetector };

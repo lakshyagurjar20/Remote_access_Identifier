@@ -1,44 +1,25 @@
 {
   "name": "remote-desktop-detector",
   "version": "1.0.0",
-  "description": "A project to detect remote desktop access applications and services during tests or assessments.",
-  "main": "dist/main.js",
+  "description": "Detects remote desktop access applications and services during tests or assessments.",
+  "main": "src/main.js",
   "scripts": {
-    "start": "ts-node src/main.ts",
-    "build": "tsc",
-    "dev": "ts-node src/main.ts",
-    "test": "jest",
-    "monitor": "ts-node src/main.ts --continuous",
-    "ui": "ts-node src/server.ts",
-    "client": "ts-node src/client/index.ts",
-    "server": "ts-node src/server/centralServer.ts"
+    "start":   "node src/main.js",
+    "monitor": "node src/main.js --continuous",
+    "ui":      "node src/server.js",
+    "client":  "node src/client/index.js",
+    "server":  "node src/server/centralServer.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "ps-list": "^7.2.0",
+    "mongodb": "^7.1.0",
+    "ps-list": "^6.0.0",
     "registry-js": "^1.16.0",
-    "tcp-port-used": "^1.0.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "tcp-port-used": "^1.0.2"
   },
-  "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
-    "@types/jest": "^29.5.11",
-    "@types/node": "^20.19.30",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.1"
-  },
-  "keywords": [
-    "remote",
-    "desktop",
-    "access",
-    "detector",
-    "security",
-    "monitoring"
-  ],
-  "author": "Your Name",
+  "keywords": ["remote", "desktop", "detector", "security", "monitoring"],
+  "author": "",
   "license": "MIT"
 }

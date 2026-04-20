@@ -1,86 +1,75 @@
-#  Remote Desktop Access Identifier
+# Remote Desktop Detector
 
-Real-time detection system for remote desktop software with a modern web UI.
+A lightweight, JavaScript-based tool for detecting running remote desktop applications (like TeamViewer, AnyDesk, RDP) using Process, Network, and Registry checks.
 
-##  Features
+## Project Structure
 
--  **30+ Remote Desktop Apps Detected**
-  - TeamViewer, AnyDesk, Chrome Remote Desktop
-  - VNC variants (UltraVNC, RealVNC, TightVNC)
-  - Enterprise tools (LogMeIn, GoToMyPC, Splashtop)
-  - And many more!
+This project has been fully converted to clean, minimal **Vanilla JavaScript (Node.js)**. No TypeScript or Build steps are required!
 
--  **Triple Detection Method**
-  - Process Detection (running applications)
-  - Network Detection (active ports with process names)
-  - Registry Detection (installed software)
+*   `src/main.js` - Single PC CLI scanning tool.
+*   `src/server.js` - Single PC Web UI scanner.
+*   `src/client/index.js` - Node client agent that continuously scans and pushes data to a central admin server.
+*   `src/server/centralServer.js` - Central admin server (requires MongoDB) that aggregates data from all client agents.
 
--  **Modern Web UI**
-  - Real-time continuous monitoring
-  - Live alerts and notifications
-  - Color-coded severity indicators
-  - Beautiful responsive design
+## Quick Start (Single Machine)
 
-##  Installation
+You can run the detector on a single machine without setting up any databases or complex configurations.
 
+### 1. Install Dependencies
 ```bash
-# Clone the repository
-git clone https://github.com/lakshyagurjar20/Remote_access_Identifier
-cd Remote_access_identifier
-
-# Install dependencies
 npm install
 ```
 
-##  Usage
+### 2. Run Options
 
-### Web UI (Recommended)
+**Option A: Single Console Scan**  
+Run a single immediate check and output to the terminal:
+```bash
+npm start
+```
+
+**Option B: Continuous Console Monitoring**  
+Run a check every 5 seconds (configurable) and keep the terminal open:
+```bash
+npm run monitor
+```
+
+**Option C: Local Web Dashboard**  
+Start a local web server to view the scan results in a browser interface:
 ```bash
 npm run ui
-# Open browser: http://localhost:3000
 ```
+*Then open `http://localhost:3000` in your browser.*
 
-### Command Line
+---
+
+## Enterprise Mode (Client / Server)
+
+If you want to deploy the scanner across multiple computers and monitor them from a central dashboard, use the Client/Server mode.
+
+### 1. Start the Central Admin Server
+The central server requires **MongoDB**. Ensure MongoDB is running locally on port `27017` or update `MONGO_URI` in your environment.
+
 ```bash
-# Single scan
-npm start
+npm run server
+```
+*Wait for the server to start, then open the Admin Dashboard at `http://localhost:8082/admin/dashboard.html`*
 
-# Continuous monitoring
-npm start -- --continuous
+### 2. Start the Client Agents
+On any PC you want to monitor, run the client agent. It will continuously scan and ping the Central Server.
+
+```bash
+# To point to your central server, you can set the SERVER_URL variable:
+# $env:SERVER_URL="http://<Central-Server-IP>:8082" 
+
+npm run client
 ```
 
+## How It Works
 
+The tool relies on three core detectors (`src/detectors/`):
+1.  **Process Detector**: Uses `ps-list` to check currently active processes against an allowed list.
+2.  **Network Detector**: Uses `tcp-port-used` and native `netstat`/`tasklist` to find open Remote Desktop ports (e.g. 5938, 3389).
+3.  **Registry Detector**: Uses `registry-js` to scan the Windows registry for installed remote access software (Windows only).
 
-##  How It Works
-
-1. **Process Detector**: Scans running processes for known remote desktop applications
-2. **Network Detector**: Checks if remote desktop ports are active and identifies the process
-3. **Registry Detector**: Examines Windows Registry for installation traces
-
-##  Requirements
-
-- Node.js 14+
-- Windows OS (for full registry detection)
-- Administrator privileges (recommended)
-
-##  Detection Coverage
-
-- **30+ Applications**
-- **80+ Process Names**
-- **60+ Registry Keys**
-- **40+ Network Ports**
-
-##  Security
-
-This tool is **read-only** and **100% safe**:
--  Only reads system information
--  Never modifies files or registry
--  No data collection or transmission
--  Open source and transparent
-
-
-
-##  Author
-
-Created by Lakshya
-
+You can add or remove recognized threats by editing `src/config/settings.js`.

@@ -262,10 +262,10 @@
   <body>
     <div class="dashboard">
       <div class="header">
-        <h1>🛡️ Remote Access Monitoring Dashboard</h1>
+        <h1> Remote Access Monitoring Dashboard</h1>
         <p>Real-time monitoring of all connected clients</p>
         <button class="refresh-btn" onclick="loadDashboard()">
-          🔄 Refresh Now
+           Refresh Now
         </button>
       </div>
 
@@ -279,11 +279,11 @@
           <div class="value" id="onlineClients">-</div>
         </div>
         <div class="stat-card threat">
-          <h3>🚨 Threats Detected</h3>
+          <h3> Threats Detected</h3>
           <div class="value" id="threatsDetected">-</div>
         </div>
         <div class="stat-card clean">
-          <h3>✅ Clean Systems</h3>
+          <h3> Clean Systems</h3>
           <div class="value" id="cleanSystems">-</div>
         </div>
       </div>
@@ -393,7 +393,7 @@
                     <td>${getPlatformIcon(client.systemInfo.platform)} ${client.systemInfo.platform}</td>
                     <td>
                         <button class="view-details" onclick="viewClient('${client.userId}')">
-                            📊 View Details
+                             View Details
                         </button>
                     </td>
                 </tr>
@@ -408,15 +408,15 @@
       }
 
       function getStatusText(client) {
-        if (!client.isOnline) return "⚪ OFFLINE";
-        return client.status === "threat" ? "🚨 THREAT" : "✅ CLEAN";
+        if (!client.isOnline) return " OFFLINE";
+        return client.status === "threat" ? " THREAT" : " CLEAN";
       }
 
       function getPlatformIcon(platform) {
-        if (platform.includes("win")) return "🪟";
-        if (platform.includes("darwin")) return "🍎";
-        if (platform.includes("linux")) return "🐧";
-        return "💻";
+        if (platform.includes("win")) return "";
+        if (platform.includes("darwin")) return "";
+        if (platform.includes("linux")) return "";
+        return "";
       }
 
       function formatTime(timestamp) {
@@ -442,7 +442,7 @@
         tbody.innerHTML = `
                 <tr>
                     <td colspan="7" style="text-align: center; padding: 40px; color: #dc3545;">
-                        ❌ ${message}
+                         ${message}
                     </td>
                 </tr>
             `;

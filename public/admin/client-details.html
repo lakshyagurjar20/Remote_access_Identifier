@@ -313,7 +313,7 @@
       </button>
 
       <div id="loadingState" class="header-card">
-        <div class="loading">🔍 Loading client details...</div>
+        <div class="loading"> Loading client details...</div>
       </div>
 
       <div id="errorState" style="display: none" class="header-card">
@@ -324,7 +324,7 @@
         <!-- Client Header -->
         <div class="header-card">
           <h1>
-            <span id="clientIcon">💻</span>
+            <span id="clientIcon"></span>
             <span id="clientName">Client Details</span>
             <span id="clientStatus" class="status-badge">-</span>
           </h1>
@@ -357,7 +357,7 @@
         <!-- Current Detection Status -->
         <div class="section">
           <div class="section-header">
-            <h2>🔍 Current Detection Status</h2>
+            <h2> Current Detection Status</h2>
           </div>
           <div class="section-content" id="detectionsContent">
             <div class="empty-state">No detection data available</div>
@@ -367,7 +367,7 @@
         <!-- Scan History -->
         <div class="section">
           <div class="section-header">
-            <h2>📊 Scan History</h2>
+            <h2> Scan History</h2>
           </div>
           <div class="section-content">
             <table class="history-table">
@@ -451,7 +451,7 @@
 
         const statusBadge = document.getElementById("clientStatus");
         statusBadge.textContent =
-          client.status === "threat" ? "🚨 THREAT DETECTED" : "✅ CLEAN";
+          client.status === "threat" ? " THREAT DETECTED" : " CLEAN";
         statusBadge.className = `status-badge ${client.status === "threat" ? "status-threat" : "status-clean"}`;
 
         document.getElementById("computerName").textContent =
@@ -548,7 +548,7 @@
                         <td>${new Date(record.timestamp).toLocaleString()}</td>
                         <td>
                             <span class="status-badge ${record.status === "threat" ? "status-threat" : "status-clean"}">
-                                ${record.status === "threat" ? "🚨 THREAT" : "✅ CLEAN"}
+                                ${record.status === "threat" ? " THREAT" : " CLEAN"}
                             </span>
                         </td>
                         <td>
@@ -568,13 +568,13 @@
       function getDetectionIcon(type) {
         switch (type) {
           case "process":
-            return "⚙️";
+            return "";
           case "network":
-            return "🌐";
+            return "";
           case "registry":
-            return "📋";
+            return "";
           default:
-            return "🔍";
+            return "";
         }
       }
 
@@ -592,10 +592,10 @@
       }
 
       function getPlatformIcon(platform) {
-        if (platform.includes("win")) return "🪟";
-        if (platform.includes("darwin")) return "🍎";
-        if (platform.includes("linux")) return "🐧";
-        return "💻";
+        if (platform.includes("win")) return "";
+        if (platform.includes("darwin")) return "";
+        if (platform.includes("linux")) return "";
+        return "";
       }
 
       function formatTime(timestamp) {
@@ -612,7 +612,7 @@
       function showError(message) {
         document.getElementById("loadingState").style.display = "none";
         document.getElementById("errorState").style.display = "block";
-        document.getElementById("errorMessage").textContent = `❌ ${message}`;
+        document.getElementById("errorMessage").textContent = ` ${message}`;
       }
 
       function escapeHtml(text) {

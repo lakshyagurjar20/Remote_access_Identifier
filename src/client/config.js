@@ -1,44 +1,20 @@
-import * as os from "os";
+const os = require("os");
 
-/**
- * CLIENT CONFIGURATION
- * Manages client settings for connecting to central server
- */
-
-export interface ClientConfig {
-  serverUrl: string;
-  userId: string;
-  reportInterval: number; // in milliseconds
-  computerName: string;
-  username: string;
-}
-
-/**
- * Load client configuration from environment variables or use defaults
- */
-export function loadClientConfig(): ClientConfig {
+function loadClientConfig() {
   return {
     serverUrl: process.env.SERVER_URL || "http://localhost:8082",
     userId: process.env.USER_ID || generateUserId(),
-    reportInterval: parseInt(process.env.REPORT_INTERVAL || "10000"), // 10 seconds
+    reportInterval: parseInt(process.env.REPORT_INTERVAL || "10000"),
     computerName: os.hostname(),
     username: os.userInfo().username,
   };
 }
 
-/**
- * Generate a unique user ID based on hostname and timestamp
- */
-function generateUserId(): string {
-  const hostname = os.hostname();
-  const timestamp = Date.now();
-  return `${hostname}-${timestamp}`;
+function generateUserId() {
+  return `${os.hostname()}-${Date.now()}`;
 }
 
-/**
- * Display current configuration
- */
-export function displayConfig(config: ClientConfig): void {
+function displayConfig(config) {
   console.log("╔════════════════════════════════════════╗");
   console.log("║     CLIENT CONFIGURATION               ║");
   console.log("╚════════════════════════════════════════╝");
@@ -49,3 +25,5 @@ export function displayConfig(config: ClientConfig): void {
   console.log(`  Report Interval: ${config.reportInterval / 1000}s`);
   console.log("═══════════════════════════════════════════\n");
 }
+
+module.exports = { loadClientConfig, displayConfig };
