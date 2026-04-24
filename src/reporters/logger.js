@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const chalk = require("chalk");
 const { MONITOR_CONFIG } = require("../config/settings");
 
 class Logger {
@@ -11,45 +10,43 @@ class Logger {
 
   logInfo(message) {
     const formatted = `[INFO] ${this.getTimestamp()} - ${message}`;
-    console.log(chalk.blue(formatted));
+    console.log(formatted);
     this.writeToFile(formatted);
   }
 
   logWarning(message) {
     const formatted = `[WARNING] ${this.getTimestamp()} - ${message}`;
-    console.warn(chalk.yellow(formatted));
+    console.warn(formatted);
     this.writeToFile(formatted);
   }
 
   logError(message) {
     const formatted = `[ERROR] ${this.getTimestamp()} - ${message}`;
-    console.error(chalk.red(formatted));
+    console.error(formatted);
     this.writeToFile(formatted);
   }
 
   logDetection(result) {
-    const color = this.getSeverityColor(result.severity);
     const message = `[DETECTION] ${result.detectorType.toUpperCase()} - ${result.details}`;
-    console.log(color(message));
+    console.log(message);
     this.writeToFile(`${this.getTimestamp()} - ${message}`);
   }
 
   logScanResult(scanResult) {
     const separator = "=".repeat(60);
-    console.log(chalk.bold.cyan(`\n${separator}`));
-    console.log(chalk.bold(`SCAN SUMMARY - ${scanResult.scanTime.toLocaleString()}`));
-    console.log(chalk.bold(`Status: ${scanResult.hasRemoteAccess ? "DETECTED" : "CLEAN"}`));
+    console.log(`\n${separator}`);
+    console.log(`SCAN SUMMARY - ${scanResult.scanTime.toLocaleString()}`);
+    console.log(`Status: ${scanResult.hasRemoteAccess ? "DETECTED" : "CLEAN"}`);
     console.log(`Summary: ${scanResult.summary}`);
 
     if (scanResult.detections.length > 0) {
       console.log("\nDetailed Results:");
       scanResult.detections.forEach((detection, index) => {
-        const color = this.getSeverityColor(detection.severity);
-        console.log(color(`  ${index + 1}. [${detection.detectorType}] ${detection.details}`));
+        console.log(`  ${index + 1}. [${detection.detectorType}] ${detection.details}`);
       });
     }
 
-    console.log(chalk.bold.cyan(`${separator}\n`));
+    console.log(`${separator}\n`);
     this.writeToFile(`\n${separator}`);
     this.writeToFile(`SCAN SUMMARY - ${scanResult.scanTime.toLocaleString()}`);
     this.writeToFile(`Status: ${scanResult.hasRemoteAccess ? "DETECTED" : "CLEAN"}`);
@@ -57,15 +54,7 @@ class Logger {
     this.writeToFile(`${separator}\n`);
   }
 
-  getSeverityColor(severity) {
-    switch (severity) {
-      case "critical": return chalk.bold.red;
-      case "high":     return chalk.red;
-      case "medium":   return chalk.yellow;
-      case "low":      return chalk.green;
-      default:         return chalk.white;
-    }
-  }
+
 
   getTimestamp() {
     return new Date().toISOString();

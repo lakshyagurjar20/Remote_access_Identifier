@@ -1,4 +1,3 @@
-const chalk = require("chalk");
 const { ALERT_CONFIG } = require("../config/settings");
 
 class AlertService {
@@ -8,23 +7,23 @@ class AlertService {
   }
 
   displayConsoleAlert(scanResult) {
-    const bar = " ".repeat(70);
+    const bar = "=".repeat(70);
     console.log("\n");
-    console.log(chalk.bgRed.white.bold(bar));
-    console.log(chalk.bgRed.white.bold("    REMOTE DESKTOP ACCESS DETECTED    ".padEnd(70)));
-    console.log(chalk.bgRed.white.bold(bar));
+    console.log(bar);
+    console.log("    REMOTE DESKTOP ACCESS DETECTED    ");
+    console.log(bar);
     console.log("");
-    console.log(chalk.red.bold("Summary:"));
-    console.log(chalk.red(`  ${scanResult.summary}`));
+    console.log("Summary:");
+    console.log(`  ${scanResult.summary}`);
     console.log("");
-    console.log(chalk.red.bold("Detections:"));
+    console.log("Detections:");
     scanResult.detections.forEach((detection, index) => {
       if (detection.isDetected) {
-        console.log(chalk.red(`  ${index + 1}. [${detection.severity.toUpperCase()}] ${detection.details}`));
+        console.log(`  ${index + 1}. [${detection.severity.toUpperCase()}] ${detection.details}`);
       }
     });
     console.log("");
-    console.log(chalk.bgRed.white.bold(bar));
+    console.log(bar);
     console.log("\n");
   }
 
@@ -32,20 +31,14 @@ class AlertService {
     if (!ALERT_CONFIG.enabled) return;
     if (detection.severity === "critical" || detection.severity === "high") {
       console.log("\n");
-      console.log(chalk.bgRed.white.bold(" CRITICAL ALERT "));
-      console.log(chalk.red.bold(detection.details));
+      console.log(" CRITICAL ALERT ");
+      console.log(detection.details);
       console.log("");
     }
   }
 
   notifyUser(message, severity = "medium") {
-    const colors = {
-      low:      chalk.green,
-      medium:   chalk.yellow,
-      high:     chalk.red,
-      critical: chalk.bgRed.white,
-    };
-    console.log(colors[severity](`[ALERT] ${message}`));
+    console.log(`[ALERT] ${message}`);
   }
 
   // TODO: implement email alerts via nodemailer

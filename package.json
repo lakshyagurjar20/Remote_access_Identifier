@@ -4,14 +4,13 @@
   "description": "Detects remote desktop access applications and services during tests or assessments.",
   "main": "src/main.js",
   "scripts": {
-    "start":   "node src/main.js",
+    "start": "node src/main.js",
     "monitor": "node src/main.js --continuous",
-    "ui":      "node src/server.js",
-    "client":  "node src/client/index.js",
-    "server":  "node src/server/centralServer.js"
+    "ui": "node src/server.js",
+    "client": "node src/client/index.js",
+    "server": "node src/server/centralServer.js"
   },
   "dependencies": {
-    "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "mongodb": "^7.1.0",
@@ -19,7 +18,13 @@
     "registry-js": "^1.16.0",
     "tcp-port-used": "^1.0.2"
   },
-  "keywords": ["remote", "desktop", "detector", "security", "monitoring"],
+  "keywords": [
+    "remote",
+    "desktop",
+    "detector",
+    "security",
+    "monitoring"
+  ],
   "author": "",
   "license": "MIT"
 }

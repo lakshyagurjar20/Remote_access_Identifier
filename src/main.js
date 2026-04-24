@@ -1,4 +1,3 @@
-const chalk = require("chalk");
 const { ContinuousMonitor } = require("./monitors/continuousMonitor");
 const { SessionMonitor } = require("./monitors/sessionMonitor");
 const { Logger } = require("./reporters/logger");
@@ -8,14 +7,14 @@ const sessionMonitor = new SessionMonitor();
 const continuousMonitor = new ContinuousMonitor();
 
 function displayBanner() {
-  console.log(chalk.cyan.bold("\n" + "=".repeat(70)));
-  console.log(chalk.cyan.bold("  Remote Desktop Access Identifier"));
-  console.log(chalk.cyan.bold("  Detecting unauthorized remote access during tests/assessments"));
-  console.log(chalk.cyan.bold("=".repeat(70) + "\n"));
+  console.log("\n" + "=".repeat(70));
+  console.log("  Remote Desktop Access Identifier");
+  console.log("  Detecting unauthorized remote access during tests/assessments");
+  console.log("=".repeat(70) + "\n");
 }
 
 function displayUsage() {
-  console.log(chalk.yellow("Usage:"));
+  console.log("Usage:");
   console.log("  npm start                 - Run a single scan");
   console.log("  npm start -- --continuous - Run continuous monitoring");
   console.log("  npm start -- --help       - Display this help message");
