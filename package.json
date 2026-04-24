@@ -5,7 +5,6 @@
   "main": "src/main.js",
   "scripts": {
     "start": "node src/main.js",
-    "monitor": "node src/main.js --continuous",
     "ui": "node src/server.js",
     "client": "node src/client/index.js",
     "server": "node src/server/centralServer.js"

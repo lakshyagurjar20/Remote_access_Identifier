@@ -1,9 +1,7 @@
 const { ContinuousMonitor } = require("./monitors/continuousMonitor");
-const { SessionMonitor } = require("./monitors/sessionMonitor");
 const { Logger } = require("./reporters/logger");
 
 const logger = new Logger();
-const sessionMonitor = new SessionMonitor();
 const continuousMonitor = new ContinuousMonitor();
 
 function displayBanner() {
@@ -13,28 +11,8 @@ function displayBanner() {
   console.log("=".repeat(70) + "\n");
 }
 
-function displayUsage() {
-  console.log("Usage:");
-  console.log("  npm start                 - Run a single scan");
-  console.log("  npm start -- --continuous - Run continuous monitoring");
-  console.log("  npm start -- --help       - Display this help message");
-  console.log("");
-}
-
-async function runSingleScan() {
-  logger.logInfo("Running single scan...");
-  const result = await sessionMonitor.runScan();
-
-  if (result.hasRemoteAccess) {
-    logger.logWarning("  Remote desktop access detected on this system!");
-    process.exit(1);
-  } else {
-    logger.logInfo(" No remote desktop access detected. System is clean.");
-    process.exit(0);
-  }
-}
-
-async function runContinuousMonitoring() {
+async function main() {
+  displayBanner();
   logger.logInfo("Starting continuous monitoring mode...");
   logger.logInfo("Press Ctrl+C to stop monitoring");
 
@@ -49,22 +27,6 @@ async function runContinuousMonitoring() {
 
   process.on("SIGINT", shutdown);
   process.on("SIGTERM", shutdown);
-}
-
-async function main() {
-  displayBanner();
-  const args = process.argv.slice(2);
-
-  if (args.includes("--help") || args.includes("-h")) {
-    displayUsage();
-    return;
-  }
-
-  if (args.includes("--continuous") || args.includes("-c")) {
-    await runContinuousMonitoring();
-  } else {
-    await runSingleScan();
-  }
 }
 
 main().catch((error) => {

@@ -1,11 +1,11 @@
 const https = require("https");
 const http = require("http");
-const { SessionMonitor } = require("../monitors/sessionMonitor");
+const { ContinuousMonitor } = require("../monitors/continuousMonitor");
 
 class ClientAgent {
   constructor(config) {
     this.config = config;
-    this.sessionMonitor = new SessionMonitor();
+    this.monitor = new ContinuousMonitor();
     this.reportInterval = null;
   }
 
@@ -33,7 +33,7 @@ class ClientAgent {
 
   async performScan() {
     try {
-      const scanResult = await this.sessionMonitor.runScan();
+      const scanResult = await this.monitor.runScan();
       console.log(`[${new Date().toLocaleTimeString()}] Scan completed`);
       console.log(`   Status: ${scanResult.hasRemoteAccess ? "THREAT DETECTED" : "Clean"}`);
       console.log(`   Threats found: ${scanResult.detections.filter((r) => r.isDetected).length}`);

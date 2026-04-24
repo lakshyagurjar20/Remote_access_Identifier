@@ -1,11 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const { SessionMonitor } = require("./monitors/sessionMonitor");
+const { ContinuousMonitor } = require("./monitors/continuousMonitor");
 
 const app = express();
 const PORT = 3000;
-const sessionMonitor = new SessionMonitor();
+const monitor = new ContinuousMonitor();
 
 let isMonitoring = false;
 let monitoringInterval = null;
@@ -29,7 +29,7 @@ app.post("/api/start-monitoring", async (req, res) => {
   const runScan = async () => {
     if (!isMonitoring) return;
     try {
-      const result = await sessionMonitor.runScan();
+      const result = await monitor.runScan();
       broadcastToClients(result);
     } catch (error) {
       console.error("Scan error:", error);
@@ -47,15 +47,6 @@ app.post("/api/stop-monitoring", (req, res) => {
   }
   stopMonitoring();
   res.json({ success: true, message: "Monitoring stopped" });
-});
-
-app.get("/api/scan-once", async (req, res) => {
-  try {
-    const result = await sessionMonitor.runScan();
-    res.json({ success: true, result });
-  } catch (error) {
-    res.status(500).json({ success: false, error: String(error) });
-  }
 });
 
 app.get("/api/status", (req, res) => {
